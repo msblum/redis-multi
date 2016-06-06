@@ -19,13 +19,14 @@ bind_port = node['redis-multi']['bind_port']
 
 # if downstream doesn't supply, do a nice default
 if node.deep_fetch('redisio', 'servers').nil?
+  Chef::Log.warn('Redisio servers nil')
   master_data = { 'name' => "#{bind_port}-slave",
                   'port' => bind_port,
                   'slaveof' => { 'address' => master_ip,
                                  'port' => bind_port
                                }
                 }
-
+  Chef::Log.warn("Master data: #{master_data}")
   node.set['redisio']['servers'] = []
   node.set['redisio']['servers'] << master_data
 end
