@@ -30,6 +30,8 @@ if node.deep_fetch('redisio', 'servers').nil?
   Chef::Log.warn("Master data: #{master_data}")
   node.set['redisio']['servers'] = []
   node.set['redisio']['servers'] << master_data
+else
+  Chef::Log.warn("Redisio servers are #{node.deep_fetch('redisio', 'servers')}")
 end
 
 tag('redis_slave')
